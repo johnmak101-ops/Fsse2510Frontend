@@ -1,0 +1,141 @@
+@import "tailwindcss";
+
+@theme {
+  /* --- 1. BRAND COLORS (Tailwind v4 Design Tokens) --- */
+  --color-brand-primary: #E0F2FE;
+  /* 非常淡的粉藍，用於雲朵或輕微背景 */
+  --color-brand-text: #2D2D2D;
+  /* 品牌深灰文字 */
+  --color-brand-bg: #FFFFFF;
+  /* 主背景 */
+  --color-gelato-pink: #FFD1DC;
+  /* 品牌招牌粉色 */
+  --color-sale-red: #E55039;
+  /* 特價標籤紅色 */
+  --color-off-white: #F5F6F6;
+  /* 灰底 Section 背景色 */
+
+  /* --- 2. TYPOGRAPHY SYSTEM (Consistency is Key) --- */
+  /* 襯線體 (Header): Playfair Display | 無襯線體 (Body): Inter */
+  --font-libre-baskerville: "Libre Baskerville", serif;
+  --font-serif: var(--font-libre-baskerville), "Baskerville", serif;
+  --font-sans: "var(--font-inter)", sans-serif;
+
+  /* --- 3. RESPONSIVE FONT SIZES (Using Clamp) --- */
+  /* 大標題: 手機 40px -> 電腦 60px */
+  --text-display-lg: clamp(2.5rem, 8vw, 3.75rem);
+  /* Section 標題: 手機 32px -> 電腦 48px */
+  --text-section-title: clamp(2rem, 5vw, 3rem);
+  /* 中標題 (Card/Marquee Title): 24px-30px */
+  --text-section-md: clamp(1.5rem, 3vw, 1.875rem);
+  /* 副標題 (Upper-case Decors): 10px-12px */
+  --text-caption: clamp(0.625rem, 1vw, 0.75rem);
+
+  /* --- 4. ANIMATIONS (Magic UI Marquee) --- */
+  --duration: 40s;
+  --gap: 1rem;
+  --animate-marquee: marquee var(--duration, 40s) linear infinite;
+  --animate-marquee-vertical: marquee-vertical var(--duration, 40s) linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-100% - var(--gap, 1rem)));
+  }
+}
+
+@keyframes marquee-vertical {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(calc(-100% - var(--gap, 1rem)));
+  }
+}
+
+/* --- 4. BASE STYLES --- */
+@layer base {
+  html {
+    @apply scroll-smooth selection:bg-brand-primary/30;
+  }
+
+  body {
+    @apply font-sans text-brand-text bg-white antialiased overflow-x-hidden;
+    /* 確保所有 Body 文字預設有較闊的行距，增加舒適感 */
+    line-height: 1.6;
+  }
+
+  /* 統一 Heading 預設樣式 */
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-serif tracking-tight leading-tight;
+  }
+
+  /* 自定義 Scrollbar (精品風格) */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-stone-200 rounded-full hover:bg-stone-300 transition-colors;
+  }
+}
+
+/* --- 5. UTILITY COMPONENTS (Reusable Styles) --- */
+@layer utilities {
+
+  /* 🕵️‍♂️ Hide Scrollbar but keep functionality (Robust) */
+  .scrollbar-hide {
+    -ms-overflow-style: none !important;
+    /* IE and Edge */
+    scrollbar-width: none !important;
+    /* Firefox */
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none !important;
+    /* Chrome, Safari and Opera */
+    width: 0 !important;
+    height: 0 !important;
+  }
+}
+
+@layer components {
+
+  /* 精品字體排版：超闊字距副標題 */
+  .text-boutique-label {
+    @apply text-[10px] md:text-[11px] font-bold uppercase tracking-[0.4em] text-brand-text/40;
+  }
+
+  /* 品牌故事內文樣式 */
+  .text-narrative {
+    @apply font-light text-brand-text/70 leading-relaxed tracking-wide;
+  }
+
+  /* 圖片容器 Hover 動效 */
+  .img-container-hover {
+    @apply overflow-hidden rounded-xl transition-all duration-700 ease-out;
+  }
+
+  .img-container-hover:hover img {
+    @apply scale-105;
+  }
+}
+
+/* --- 6. GSAP ANIMATION HELPERS --- */
+/* 防止 GSAP 入場前元素閃爍 (FOUC) */
+.fade-up {
+  opacity: 0;
+  will-change: transform, opacity;
+}

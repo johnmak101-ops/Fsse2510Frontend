@@ -1,0 +1,72 @@
+[
+  {
+    "id": "women",
+    "title": "Women",
+    "subtitle": "Comfort & Elegance",
+    "description": "Our signature soft loungewear designed for everyday comfort.",
+    "image": "/images/category/steiff.webp",
+    "link": "/collections/women",
+    "color": "bg-[#FDF2F8]",
+    "type": "category"
+  },
+  {
+    "id": "men",
+    "title": "Men",
+    "subtitle": "Relaxed & Simple",
+    "description": "Easy-to-wear pieces for the modern man at home.",
+    "image": "/images/category/men-banner.webp",
+    "link": "/collections/men",
+    "color": "bg-[#F0F9FF]",
+    "type": "category"
+  },
+  {
+    "id": "pet",
+    "title": "Pet",
+    "subtitle": "For Your Furry Friends",
+    "description": "Soft and cute accessories for your pets.",
+    "image": "/images/category/pet-banner.webp",
+    "link": "/collections/all",
+    "color": "bg-[#ECFDF5]",
+    "type": "category"
+  },
+  {
+    "id": "home",
+    "title": "Home",
+    "subtitle": "Living Essentials",
+    "description": "Everything you need for a cozy living atmosphere.",
+    "image": "/images/category/home-banner.webp",
+    "link": "/collections/all",
+    "color": "bg-[#FFFBEB]",
+    "type": "category"
+  },
+  {
+    "id": "steiff",
+    "title": "Steiff",
+    "subtitle": "Holiday Special",
+    "description": "The world's first teddy bear meets the softest loungewear.",
+    "image": "/images/category/steiff.webp",
+    "link": "/collections/steiff",
+    "color": "bg-[#4A2B2B]",
+    "type": "story"
+  },
+  {
+    "id": "new_arrivals",
+    "title": "New Arrivals",
+    "subtitle": "Latest Collection",
+    "description": "Discover the newest styles and limited edition pieces.",
+    "image": "/images/category/snoopy.webp",
+    "link": "/collections/new",
+    "color": "bg-[#F8FAFC]",
+    "type": "collection"
+  },
+  {
+    "id": "all",
+    "title": "Shop All",
+    "subtitle": "Full Catalog",
+    "description": "Browse everything in our collection.",
+    "image": "/images/category/banner.webp",
+    "link": "/collections/all",
+    "color": "bg-white",
+    "type": "category"
+  }
+]

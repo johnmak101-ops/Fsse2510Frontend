@@ -1,0 +1,322 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import {
+    RiArrowLeftLine,
+    RiSaveLine
+} from "@remixicon/react";
+import {
+    navigationService,
+    NavigationItem,
+    NavigationOptions
+} from "@/services/navigation.service";
+import AdminLoadingState from "@/features/admin/components/AdminLoadingState";
+
+// Recursive function to flatten the tree to find an item by ID
+function findItem(items: NavigationItem[], id: number): NavigationItem | null {
+    for (const item of items) {
+        if (item.id === id) return item;
+        if (item.children) {
+            const found = findItem(item.children, id);
+            if (found) return found;
+        }
+    }
+    return null;
+}
+
+export default function EditNavigationItemPage({ params }: { params: Promise<{ id: string }> }) {
+    const router = useRouter();
+    // Next.js 15+ Params are Promises
+    const [pageId, setPageId] = useState<number | null>(null);
+
+    const [loading, setLoading] = useState(true);
+    const [submitting, setSubmitting] = useState(false);
+
+    // Data Sources
+    const [existingItems, setExistingItems] = useState<NavigationItem[]>([]);
+    const [options, setOptions] = useState<NavigationOptions>({ collections: [], categories: [], tags: [], productTypes: [] });
+
+    // Form State
+    const [formData, setFormData] = useState({
+        label: "",
+        type: "TAB",
+        action_type: "URL",
+        action_value: "",
+        parent_id: "" as string | number,
+        sort_order: 10,
+        is_new: false,
+        is_active: true
+    });
+
+    useEffect(() => {
+        // Resolve Params Promise
+        params.then(p => setPageId(Number(p.id)));
+    }, [params]);
+
+    useEffect(() => {
+        if (!pageId) return;
+
+        Promise.all([
+            navigationService.getPublicNavigation(),
+            navigationService.getNavigationOptions()
+        ]).then(([navData, optsData]) => {
+            setExistingItems(navData);
+            setOptions(optsData);
+
+            const item = findItem(navData, pageId);
+            if (item) {
+                setFormData({
+                    label: item.label,
+                    type: item.type,
+                    action_type: item.action_type,
+                    action_value: item.action_value || "",
+                    parent_id: item.parent_id !== null ? item.parent_id : "",
+                    sort_order: item.sort_order,
+                    is_new: item.is_new,
+                    is_active: item.is_active
+                });
+            } else {
+                alert("Item not found!");
+                router.push("/admin/navigation");
+            }
+        }).catch(err => console.error(err))
+            .finally(() => setLoading(false));
+
+    }, [pageId, router]);
+
+    const parentOptions = existingItems.filter(i => i.type === "TAB" && i.id !== pageId); // Prevent self-parenting
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!pageId) return;
+        setSubmitting(true);
+        try {
+            await navigationService.updateItem(pageId, {
+                id: pageId,
+                ...formData,
+                parent_id: formData.parent_id ? Number(formData.parent_id) : null,
+                action_value: formData.action_value.trim()
+            });
+            router.push("/admin/navigation");
+            router.refresh();
+        } catch (error) {
+            console.error(error);
+            alert("Failed to update item.");
+            setSubmitting(false);
+        }
+    };
+
+    if (loading) return <AdminLoadingState />;
+
+    return (
+        <div className="p-8 max-w-3xl mx-auto">
+            <div className="mb-8">
+                <Link
+                    href="/admin/navigation"
+                    className="inline-flex items-center text-sm text-stone-500 hover:text-stone-800 transition-colors mb-4"
+                >
+                    <RiArrowLeftLine size={16} className="mr-1" />
+                    Back to List
+                </Link>
+                <div className="flex items-center gap-3">
+                    <h1 className="text-2xl font-bold text-stone-800">Edit Menu Item</h1>
+                    <span className="px-2 py-1 bg-stone-100 text-stone-500 text-xs font-mono rounded">ID: {pageId}</span>
+                </div>
+            </div>
+
+            <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm border border-stone-200 p-6 space-y-6">
+
+                {/* 1. Basic Info */}
+                <div className="grid grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                        <label className="text-sm font-semibold text-stone-700">Label</label>
+                        <input
+                            required
+                            type="text"
+                            value={formData.label}
+                            onChange={e => setFormData({ ...formData, label: e.target.value })}
+                            className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900/20 focus:border-stone-900"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <label className="text-sm font-semibold text-stone-700">Type</label>
+                        <select
+                            value={formData.type}
+                            onChange={e => setFormData({ ...formData, type: e.target.value })}
+                            className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900/20 focus:border-stone-900"
+                        >
+                            <option value="TAB">Top-Level Tab</option>
+                            <option value="DROPDOWN_ITEM">Dropdown Item</option>
+                        </select>
+                    </div>
+                </div>
+
+                {/* 2. Parent Selection */}
+                {formData.type === "DROPDOWN_ITEM" && (
+                    <div className="space-y-2">
+                        <label className="text-sm font-semibold text-stone-700">Parent Tab</label>
+                        <select
+                            required
+                            value={formData.parent_id}
+                            onChange={e => setFormData({ ...formData, parent_id: e.target.value })}
+                            className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900/20 focus:border-stone-900"
+                        >
+                            <option value="">Select a Parent...</option>
+                            {parentOptions.map(p => (
+                                <option key={p.id} value={p.id}>{p.label}</option>
+                            ))}
+                        </select>
+                    </div>
+                )}
+
+                <div className="border-t border-stone-100 my-4" />
+
+                {/* 3. Action / Link */}
+                <div className="space-y-4">
+                    <div className="space-y-2">
+                        <label className="text-sm font-semibold text-stone-700">Action Type</label>
+                        <select
+                            value={formData.action_type}
+                            onChange={e => setFormData({ ...formData, action_type: e.target.value, action_value: "" })}
+                            className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900/20 focus:border-stone-900"
+                        >
+                            <option value="URL">Custom URL</option>
+                            <option value="FILTER_COLLECTION">Filter by Collection</option>
+                            <option value="FILTER_CATEGORY">Filter by Category</option>
+                            <option value="FILTER_PRODUCT_TYPE">Filter by Product Type</option>
+                            <option value="FILTER_CUSTOM">Filter by Product Tag</option>
+                        </select>
+                    </div>
+
+                    <div className="space-y-2">
+                        <label className="text-sm font-semibold text-stone-700">
+                            {formData.action_type === "URL" ? "Target URL" :
+                                formData.action_type === "FILTER_COLLECTION" ? "Select Collection" :
+                                    formData.action_type === "FILTER_CATEGORY" ? "Select Category" :
+                                        formData.action_type === "FILTER_PRODUCT_TYPE" ? "Select Product Type" :
+                                            "Product Tag / Query"}
+                        </label>
+
+                        {/* Dynamic Input based on Action Type - COPY FROM CREATE PAGE */}
+                        {formData.action_type === "FILTER_COLLECTION" ? (
+                            <select
+                                required
+                                value={formData.action_value}
+                                onChange={e => setFormData({ ...formData, action_value: e.target.value })}
+                                className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900/20 focus:border-stone-900"
+                            >
+                                <option value="">Select Collection...</option>
+                                {/* Keep value even if not in list (legacy support) */}
+                                {(!options.collections.includes(formData.action_value) && formData.action_value) && <option value={formData.action_value}>{formData.action_value}</option>}
+                                {options.collections.map(c => <option key={c} value={c}>{c}</option>)}
+                            </select>
+                        ) : formData.action_type === "FILTER_CATEGORY" ? (
+                            <select
+                                required
+                                value={formData.action_value}
+                                onChange={e => setFormData({ ...formData, action_value: e.target.value })}
+                                className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900/20 focus:border-stone-900"
+                            >
+                                <option value="">Select Category...</option>
+                                {(!options.categories.includes(formData.action_value) && formData.action_value) && <option value={formData.action_value}>{formData.action_value}</option>}
+                                {options.categories.map(c => <option key={c} value={c}>{c}</option>)}
+                            </select>
+                        ) : formData.action_type === "FILTER_CUSTOM" ? (
+                            <div className="space-y-1">
+                                <select
+                                    onChange={e => setFormData({ ...formData, action_value: `tag=${e.target.value}` })}
+                                    className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900/20 focus:border-stone-900 mb-2"
+                                >
+                                    <option value="">Select Existing Tag (Optional)</option>
+                                    {options.tags.map(t => <option key={t} value={t}>{t}</option>)}
+                                </select>
+                                <input
+                                    type="text"
+                                    value={formData.action_value}
+                                    onChange={e => setFormData({ ...formData, action_value: e.target.value })}
+                                    className="w-full px-3 py-2 border border-stone-300 rounded-lg bg-stone-50 font-mono text-sm"
+                                    placeholder="e.g. tag=BestSeller"
+                                />
+                            </div>
+                        ) : formData.action_type === "FILTER_PRODUCT_TYPE" ? (
+                            <select
+                                required
+                                value={formData.action_value}
+                                onChange={e => setFormData({ ...formData, action_value: e.target.value })}
+                                className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900/20 focus:border-stone-900"
+                            >
+                                <option value="">Select Product Type...</option>
+                                {options.productTypes?.map(t => <option key={t} value={t}>{t}</option>)}
+                            </select>
+                        ) : (
+                            <input
+                                required
+                                type="text"
+                                value={formData.action_value}
+                                onChange={e => setFormData({ ...formData, action_value: e.target.value })}
+                                className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900/20 focus:border-stone-900"
+                            />
+                        )}
+                    </div>
+                </div>
+
+                <div className="border-t border-stone-100 my-4" />
+
+                {/* 4. Meta & Status */}
+                <div className="grid grid-cols-3 gap-6">
+                    <div className="space-y-2">
+                        <label className="text-sm font-semibold text-stone-700">Sort Order</label>
+                        <input
+                            type="number"
+                            value={formData.sort_order}
+                            onChange={e => setFormData({ ...formData, sort_order: Number(e.target.value) })}
+                            className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900/20 focus:border-stone-900"
+                        />
+                    </div>
+                    <div className="flex items-center pt-8">
+                        <label className="flex items-center gap-2 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                checked={formData.is_new}
+                                onChange={e => setFormData({ ...formData, is_new: e.target.checked })}
+                                className="w-4 h-4 text-stone-900 rounded focus:ring-stone-900"
+                            />
+                            <span className="text-sm font-medium text-stone-700">Is New Badge?</span>
+                        </label>
+                    </div>
+                    <div className="flex items-center pt-8">
+                        <label className="flex items-center gap-2 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                checked={formData.is_active}
+                                onChange={e => setFormData({ ...formData, is_active: e.target.checked })}
+                                className="w-4 h-4 text-stone-900 rounded focus:ring-stone-900"
+                            />
+                            <span className="text-sm font-medium text-stone-700">Is Active?</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div className="pt-6 flex justify-end gap-3">
+                    <button
+                        type="button"
+                        onClick={() => router.back()}
+                        className="px-6 py-2 bg-stone-100 text-stone-600 rounded-lg hover:bg-stone-200 transition-colors font-medium"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        type="submit"
+                        disabled={submitting}
+                        className="px-6 py-2 bg-stone-900 text-white rounded-lg hover:bg-stone-900/90 transition-colors font-medium flex items-center gap-2"
+                    >
+                        {submitting ? "Saving..." : <><RiSaveLine size={18} /> Update Item</>}
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    );
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "imageSrc": "/images/background/banner-1.webp",
+    "mobileImageSrc": "/images/background/banner-1-mobile.webp",
+    "tagline": "Steiff × Gelato Pique",
+    "title": "Warmth For Winter.",
+    "subtitle": "The perfect gift for yourself and your loved ones.",
+    "ctaText": "View Collection",
+    "ctaLink": "/collections?name=2025%20Steiff"
+  },
+  {
+    "id": 2,
+    "imageSrc": "/images/background/banner-2.webp",
+    "mobileImageSrc": "/images/background/banner-2-mobile.webp",
+    "tagline": "Holiday Special",
+    "title": "Holiday Collection",
+    "subtitle": "Cozy moments for the holiday season.",
+    "ctaText": "View Gift Guide",
+    "ctaLink": "/collections?name=peanuts"
+  },
+  {
+    "id": 3,
+    "imageSrc": "/images/background/banner-3.webp",
+    "mobileImageSrc": "/images/background/banner-3-mobile.webp",
+    "tagline": "Online Exclusive",
+    "title": "Limited Edition.",
+    "subtitle": "Discover styles you won't find anywhere else.",
+    "ctaText": "Shop Exclusives",
+    "ctaLink": "/collections?name=hotel%20getaway"
+  }
+]
