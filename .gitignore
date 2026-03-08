@@ -52,3 +52,6 @@ next-env.d.ts
 # ide
 .idea/
 .vscode/
+
+# custom artifacts
+frontend_relationships.md
