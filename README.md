@@ -29,7 +29,7 @@ A Next.js 16 storefront application built with React 19 and Tailwind CSS 4. It d
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Framework**: Next.js 16.1 (App Router)
 - **Library**: React 19.2
