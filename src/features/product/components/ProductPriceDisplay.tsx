@@ -26,9 +26,8 @@ export default function ProductPriceDisplay({ product, isSyncing }: ProductPrice
     const hasDiscount =
         !!(product.discountAmount && product.discountAmount > 0) && !isSyncing;
 
-    const isMemberExclusive = product.promotionBadgeText
-        ?.toUpperCase()
-        .includes("EXCLUSIVE");
+    const isMemberExclusive = product.promotionBadgeTexts
+        ?.some(b => b.toUpperCase().includes("EXCLUSIVE"));
 
     return (
         <div className="flex items-center gap-4">
@@ -67,30 +66,32 @@ export default function ProductPriceDisplay({ product, isSyncing }: ProductPrice
                 </span>
             )}
 
-            {/* ── Promotion Badge ── */}
+            {/* ── Promotion Badges ── */}
             {!isSyncing &&
-                product.promotionBadgeText &&
-                product.promotionBadgeText.trim().length > 1 && (
+                product.promotionBadgeTexts &&
+                product.promotionBadgeTexts.length > 0 ? (
+                product.promotionBadgeTexts.map((badge, idx) => (
                     <span
+                        key={idx}
                         className={cn(
                             "text-white text-[9px] font-sans font-bold px-2.5 py-1 rounded-full uppercase tracking-[0.15em]",
-                            getPromotionBadgeClass(product.promotionBadgeText)
+                            getPromotionBadgeClass(badge)
                         )}
                     >
-                        {product.promotionBadgeText}
+                        {badge}
                     </span>
-                )}
-
-            {/* ── Fallback % badge ── */}
-            {!isSyncing &&
-                !product.promotionBadgeText &&
+                ))
+            ) : (
+                /* ── Fallback % badge ── */
+                !isSyncing &&
                 hasDiscount &&
                 product.discountPercentage != null &&
                 product.discountPercentage > 0 && (
                     <span className="bg-sale-red text-white text-[9px] font-sans font-bold px-2.5 py-1 rounded-full uppercase tracking-[0.15em]">
                         {Math.abs(Math.round(product.discountPercentage * 100))}% OFF
                     </span>
-                )}
+                )
+            )}
         </div>
     );
 }

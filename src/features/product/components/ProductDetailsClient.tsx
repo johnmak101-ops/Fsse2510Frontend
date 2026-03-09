@@ -111,7 +111,7 @@ export default function ProductDetailsClient({ product: initialProduct }: Produc
         originalPrice: product.originalPrice,
         discountAmount: product.discountAmount,
         discountPercentage: product.discountPercentage,
-        promotionBadgeTexts: product.promotionBadgeText ? [product.promotionBadgeText] : undefined,
+        promotionBadgeTexts: product.promotionBadgeTexts,
         cartQuantity: quantity,
         stock: selectedVariant.stock,
         selectedSize: selectedVariant.size,

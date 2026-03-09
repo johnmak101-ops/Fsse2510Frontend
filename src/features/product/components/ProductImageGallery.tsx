@@ -63,20 +63,28 @@ export default function ProductImageGallery({
         <div className="lg:col-span-7 space-y-4">
             {/* ── Main Image ── */}
             <div className="relative aspect-[3/4] w-full bg-stone-50 overflow-hidden group">
-                {/* Sale Badge */}
+                {/* Sale Badges */}
                 {(product.isSale || hasDiscount) && (
-                    <div className="absolute top-4 left-4 z-20">
-                        <span
-                            className={cn(
-                                "text-white text-[11px] font-sans font-bold px-3.5 py-1.5 rounded-full uppercase tracking-[0.15em] shadow-sm",
-                                getPromotionBadgeClass(product.promotionBadgeText)
-                            )}
-                        >
-                            {product.promotionBadgeText ||
-                                (product.discountPercentage
+                    <div className="absolute top-4 left-4 z-20 flex flex-wrap gap-1.5">
+                        {product.promotionBadgeTexts && product.promotionBadgeTexts.length > 0 ? (
+                            product.promotionBadgeTexts.map((badge, idx) => (
+                                <span
+                                    key={idx}
+                                    className={cn(
+                                        "text-white text-[11px] font-sans font-bold px-3.5 py-1.5 rounded-full uppercase tracking-[0.15em] shadow-sm",
+                                        getPromotionBadgeClass(badge)
+                                    )}
+                                >
+                                    {badge}
+                                </span>
+                            ))
+                        ) : (
+                            <span className="bg-sale-red text-white text-[11px] font-sans font-bold px-3.5 py-1.5 rounded-full uppercase tracking-[0.15em] shadow-sm">
+                                {product.discountPercentage
                                     ? `-${Math.round(product.discountPercentage * 100)}% OFF`
-                                    : "SALE")}
-                        </span>
+                                    : "SALE"}
+                            </span>
+                        )}
                     </div>
                 )}
 

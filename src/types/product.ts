@@ -25,8 +25,8 @@ export interface Product {
     isSale: boolean;
     /** The UUID/ID of the promotion specifically setting this product's price. */
     appliedPromotionId?: number;
-    /** Short text for UI ribbons (e.g., "SALE", "HOT"). */
-    promotionBadgeText?: string;
+    /** Short text for UI ribbons (e.g., "SALE", "HOT"). Supports multiple stacked promotions. */
+    promotionBadgeTexts?: string[];
     isFeatured: boolean;
     featuredPriority: number;
     hasStock: boolean;

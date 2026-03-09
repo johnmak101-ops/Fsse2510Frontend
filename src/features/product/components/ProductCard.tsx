@@ -79,15 +79,22 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
                 </span>
               )}
               {product.isSale && (
-                <span className={cn(
-                  "text-white text-[9px] font-sans font-bold px-2.5 py-1 rounded-full uppercase tracking-[0.15em]",
-                  getPromotionBadgeClass(product.promotionBadgeText)
-                )}>
-                  {product.promotionBadgeText ||
-                    (product.discountPercentage && Math.abs(product.discountPercentage) > 0
+                product.promotionBadgeTexts && product.promotionBadgeTexts.length > 0 ? (
+                  product.promotionBadgeTexts.map((badge, idx) => (
+                    <span key={idx} className={cn(
+                      "text-white text-[9px] font-sans font-bold px-2.5 py-1 rounded-full uppercase tracking-[0.15em]",
+                      getPromotionBadgeClass(badge)
+                    )}>
+                      {badge}
+                    </span>
+                  ))
+                ) : (
+                  <span className="bg-sale-red text-white text-[9px] font-sans font-bold px-2.5 py-1 rounded-full uppercase tracking-[0.15em]">
+                    {product.discountPercentage && Math.abs(product.discountPercentage) > 0
                       ? `-${Math.abs(Math.round(product.discountPercentage * 100))}% OFF`
-                      : "SALE")}
-                </span>
+                      : "SALE"}
+                  </span>
+                )
               )}
             </div>
           )}
@@ -130,7 +137,7 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
         <div className="font-sans flex items-center justify-center gap-2.5 pt-1">
           {hasDiscount ? (
             <>
-              {product.promotionBadgeText?.toUpperCase().includes("EXCLUSIVE") && (
+              {product.promotionBadgeTexts?.some(b => b.toUpperCase().includes("EXCLUSIVE")) && (
                 <span className="text-[10px] font-bold text-stone-900 uppercase tracking-wider block">
                   Member Price
                 </span>
