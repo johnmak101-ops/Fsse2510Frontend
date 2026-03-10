@@ -76,7 +76,7 @@ const kyInstance = ky.create({
             const token = await auth.currentUser.getIdToken();
             request.headers.set('Authorization', `Bearer ${token}`);
           } catch (e) {
-            console.warn('[Auth] Token fetch failed', e);
+            if (process.env.NODE_ENV === 'development') console.warn('[Auth] Token fetch failed', e);
           }
         }
       },

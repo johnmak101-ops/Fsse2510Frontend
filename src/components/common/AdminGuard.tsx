@@ -12,6 +12,7 @@ import { ReactNode, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/features/auth/store/useAuthStore";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
 
 /**
  * authorization gateway.
@@ -28,8 +29,9 @@ export default function AdminGuard({ children }: { children: ReactNode }) {
             if (!user) {
                 router.push("/login");
             } else if (user.role !== 'ADMIN') {
-                console.error("Access Denied: Admin role required.");
-                router.push("/");
+                if (process.env.NODE_ENV === 'development') console.error(`Access Denied: User attempted to access admin route without ADMIN role.`);
+                toast.error("Access Denied: Administrator privileges required.");
+                router.replace("/");
             }
         }
     }, [user, isLoading, router]);

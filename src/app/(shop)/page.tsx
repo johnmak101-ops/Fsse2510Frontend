@@ -27,7 +27,7 @@ export default async function HomePage() {
   try {
     showcaseCollections = await productService.getShowcaseCollections();
   } catch (error) {
-    console.error("HomePage: Failed to fetch showcase collections", error);
+    if (process.env.NODE_ENV === 'development') console.error("HomePage: Failed to fetch showcase collections", error);
     // Silent fail to allow page to render the rest
   }
 

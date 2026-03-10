@@ -63,7 +63,7 @@ const getToken = async () => {
     try {
       return await auth.currentUser.getIdToken();
     } catch (e) {
-      console.warn("[Cart] Failed to refresh token", e);
+      if (process.env.NODE_ENV === 'development') console.warn("[Cart] Failed to refresh token", e);
     }
   }
   return useAuthStore.getState().idToken || undefined;

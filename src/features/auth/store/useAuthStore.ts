@@ -46,7 +46,7 @@ export const useAuthStore = create<AuthState>((set) => ({
             useCartStore.getState().clearCart();
             await auth.signOut();
         } catch (error) {
-            console.error("Logout Error:", error);
+            if (process.env.NODE_ENV === 'development') console.error("Logout Error:", error);
         }
 
         set({ user: null, idToken: null, isLoading: false });

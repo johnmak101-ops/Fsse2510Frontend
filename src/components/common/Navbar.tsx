@@ -77,18 +77,23 @@ export default function Navbar() {
       case "FILTER_COLLECTION":
         return `/collections?name=${encodeURIComponent(item.action_value)}`;
       case "FILTER_CATEGORY":
-        return `/collections/${item.action_value}`;
-      case "FILTER_PRODUCT_TYPE":
-        // Context-aware URL resolution: if a child of a category, scope the filter to that category.
-        const baseUrl = (parent && parent.action_type === "FILTER_CATEGORY")
-          ? `/collections/${parent.action_value}`
-          : "/collections/all";
-        return `${baseUrl}?product_type=${encodeURIComponent(item.action_value)}`;
-      case "FILTER_CUSTOM":
-        return `/collections?${item.action_value}`;
+        return `/collections/${encodeURIComponent(item.action_value)}`;
+      case "FILTER_PRODUCT_TYPE": {
+        const parentSlug = (parent && parent.action_type === "FILTER_CATEGORY")
+          ? encodeURIComponent(parent.action_value)
+          : "all";
+        return `/collections/${parentSlug}?product_type=${encodeURIComponent(item.action_value)}`;
+      }
+      case "FILTER_CUSTOM": {
+        const params = new URLSearchParams(item.action_value);
+        return `/collections?${params.toString()}`;
+      }
       case "URL":
       default:
-        return item.action_value || "#";
+        if (item.action_value?.startsWith("/") && !item.action_value.startsWith("//")) {
+          return item.action_value;
+        }
+        return "#";
     }
   };
 
@@ -226,8 +231,8 @@ export default function Navbar() {
                         </Link>
                       </DropdownMenu.Item>
 
-                      {/* Show Dashboard Link for special users (e.g., admin email) */}
-                      {user.email.includes("admin") && (
+                      {/* Show Dashboard Link for authorized administrators */}
+                      {user.role === 'ADMIN' && (
                         <DropdownMenu.Item asChild>
                           <Link href="/admin" className="flex items-center gap-3 px-4 py-3 text-[11px] font-bold tracking-widest uppercase text-brand-text hover:bg-brand-primary hover:pl-8 rounded-xl transition-all duration-300 outline-none cursor-pointer">
                             <RiUserSettingsLine size={18} className="text-stone-400" />

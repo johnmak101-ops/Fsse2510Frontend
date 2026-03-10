@@ -23,6 +23,7 @@ export async function createProductAction(data: CreateProductRequestDto, token?:
         const result = await adminProductService.createProduct(data, token);
         revalidatePath("/admin/products");
         revalidatePath("/products");
+        revalidatePath("/", "layout"); // Broad revalidation
         return { success: true, data: result };
     } catch (error: unknown) {
         console.error("Failed to create product:", error);
@@ -41,6 +42,7 @@ export async function updateProductAction(pid: number, data: UpdateProductReques
 
         revalidatePath(`/admin/products/${pid}`);
         revalidatePath("/admin/products");
+        revalidatePath("/", "layout"); // Broad revalidation
 
         if (result.slug) {
             // WHY: revalidate all potential cached paths where this product might be rendered as a detail page.
@@ -63,6 +65,7 @@ export async function deleteProductAction(pid: number, token?: string) {
     try {
         await adminProductService.deleteProduct(pid, token);
         revalidatePath("/admin/products");
+        revalidatePath("/", "layout"); // Broad revalidation
         return { success: true };
     } catch (error: unknown) {
         console.error("Failed to delete product:", error);

@@ -18,6 +18,16 @@ export function cn(...inputs: ClassValue[]) {
  * Formats a number as a USD currency string using the browser's locale.
  * @param {number} amount - The numeric value to format.
  */
+/**
+ * Validates a redirect URL to prevent open-redirect attacks.
+ * Only allows relative paths (starting with `/` but not `//`).
+ */
+export function getSafeRedirect(url: string | null): string {
+  if (!url) return "/";
+  if (url.startsWith("/") && !url.startsWith("//")) return url;
+  return "/";
+}
+
 export function formatCurrency(amount: number) {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',

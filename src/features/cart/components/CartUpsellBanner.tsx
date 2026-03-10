@@ -118,6 +118,13 @@ export default function CartUpsellBanner({ cartItems }: CartUpsellBannerProps) {
                     if (eligibleItems.length === 0) continue;
 
                     // --- SUPERIORITY FILTERING (Solve 50% vs 10% confusion) ---
+
+                    // Define which promotions always stack and should never be hidden (Order-level)
+                    const STACKABLE_TYPES = [
+                        PromotionType.MIN_QUANTITY_DISCOUNT,
+                        PromotionType.MIN_AMOUNT_DISCOUNT
+                    ];
+
                     // Calculate potential discount percentage of this promo
                     let potentialPct = 0;
                     if (promo.type === PromotionType.BUY_X_GET_Y_FREE) {
@@ -136,8 +143,8 @@ export default function CartUpsellBanner({ cartItems }: CartUpsellBannerProps) {
                     const currentPct = (eligibleItems.reduce((sum, item) => sum + (item.discountPercentage || 0) * item.cartQuantity, 0) / totalQty) * 100;
 
                     // If user already has a better deal on these items, don't confuse them with a weaker prompt
-                    // (Allow a 0.1% buffer for floating point precision)
-                    if (potentialPct <= currentPct + 0.1) {
+                    // UNLESS it's an order-level discount that stacks anyway!
+                    if (!STACKABLE_TYPES.includes(promo.type) && potentialPct <= currentPct + 0.1) {
                         continue;
                     }
 

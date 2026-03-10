@@ -21,6 +21,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { syncUserAction } from "./actions";
 import { getFriendlyErrorMessage } from "@/lib/error-utils";
+import { getSafeRedirect } from "@/lib/utils";
 
 import { motion, AnimatePresence } from "framer-motion";
 import { InputGroup } from "@/components/auth/InputGroup";
@@ -74,7 +75,7 @@ function LoginFormContent() {
 
     const router = useRouter();
     const searchParams = useSearchParams();
-    const redirectTo = searchParams.get("redirect") || "/";
+    const redirectTo = getSafeRedirect(searchParams.get("redirect"));
 
     const toggleMode = () => {
         setIsLogin(!isLogin);
@@ -89,11 +90,11 @@ function LoginFormContent() {
             const token = await user.getIdToken();
             const result = await syncUserAction(token);
 
-            if (!result.success) {
+            if (!result.success && process.env.NODE_ENV === 'development') {
                 console.error("Backend Sync Failed:", result.error);
             }
         } catch (err) {
-            console.error("Token Retrieval Failed:", err);
+            if (process.env.NODE_ENV === 'development') console.error("Token Retrieval Failed:", err);
         }
     };
 
@@ -122,7 +123,7 @@ function LoginFormContent() {
 
             router.push(redirectTo);
         } catch (err: unknown) {
-            console.error("Auth Error:", err);
+            if (process.env.NODE_ENV === 'development') console.error("Auth Error:", err);
             setError(getFriendlyErrorMessage(err));
         } finally {
             setLoading(false);
@@ -140,7 +141,7 @@ function LoginFormContent() {
                 router.push(redirectTo);
             }
         } catch (err: unknown) {
-            console.error("Google Auth Request Error:", err);
+            if (process.env.NODE_ENV === 'development') console.error("Google Auth Request Error:", err);
             setError(getFriendlyErrorMessage(err));
         } finally {
             setLoading(false);

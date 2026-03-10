@@ -25,7 +25,7 @@ export async function syncUserAction(token: string) {
         });
         return { success: true };
     } catch (error: unknown) {
-        console.error("[syncUserAction] FAILED.", error);
+        if (process.env.NODE_ENV === 'development') console.error("[syncUserAction] FAILED.", error);
         const message = error instanceof Error ? error.message : "Failed to sync user";
         return { success: false, error: message };
     }
