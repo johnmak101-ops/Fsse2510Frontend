@@ -42,7 +42,7 @@ const nextConfig: NextConfig = {
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com https://js.stripe.com https://accounts.google.com",
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: blob: https://images.johnmak.store https://johnmak.store https://www.johnmak.store",
-              "connect-src 'self' https://*.firebaseio.com https://*.googleapis.com https://api.stripe.com https://api.johnmak.store https://johnmak.store https://www.johnmak.store",
+              "connect-src 'self' http://localhost:8080 http://localhost:3000 ws://localhost:3000 https://*.firebaseio.com https://*.googleapis.com https://api.stripe.com https://api.johnmak.store https://johnmak.store https://www.johnmak.store",
               "frame-src https://*.firebaseapp.com https://js.stripe.com https://accounts.google.com",
               "font-src 'self' data:",
             ].join('; '),

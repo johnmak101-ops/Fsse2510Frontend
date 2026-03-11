@@ -13,6 +13,27 @@ export default function AdminOrderDetailPage({ params }: { params: Promise<{ tid
     const { tid } = use(params);
     const [order, setOrder] = useState<Transaction | null>(null);
     const [loading, setLoading] = useState(true);
+    const [updating, setUpdating] = useState(false);
+    const [statusError, setStatusError] = useState<string | null>(null);
+
+    const handleStatusUpdate = async (newStatus: PaymentStatus) => {
+        if (!order || updating) return;
+        if (!window.confirm(`Admin Action: Are you sure you want to MANUALLY override order status to ${newStatus}?`)) return;
+
+        setUpdating(true);
+        setStatusError(null);
+        try {
+            const token = await auth.currentUser?.getIdToken();
+            if (token) {
+                const updatedOrder = await adminOrderService.updateOrderStatus(order.tid, newStatus, token);
+                setOrder(updatedOrder);
+            }
+        } catch (err: any) {
+            setStatusError(err.message || "Failed to update status");
+        } finally {
+            setUpdating(false);
+        }
+    };
 
     useEffect(() => {
         const fetchOrder = async () => {
@@ -59,7 +80,7 @@ export default function AdminOrderDetailPage({ params }: { params: Promise<{ tid
                             {format(new Date(order.datetime), "MMMM d, yyyy 'at' HH:mm")}
                         </div>
                     </div>
-                    <div>
+                    <div className="flex flex-col items-end gap-2">
                         <span className={`px-3 py-1 rounded text-xs font-bold uppercase tracking-wide border ${order.status === PaymentStatus.SUCCESS ? "bg-green-50 text-green-700 border-green-200" :
                             order.status === PaymentStatus.PENDING ? "bg-yellow-50 text-yellow-700 border-yellow-200" :
                                 order.status === PaymentStatus.ABORTED ? "bg-red-50 text-red-700 border-red-200" :
@@ -67,6 +88,29 @@ export default function AdminOrderDetailPage({ params }: { params: Promise<{ tid
                             }`}>
                             {order.status}
                         </span>
+
+                        {/* Admin Manual Override Controls */}
+                        <div className="flex gap-2 mt-1">
+                            {order.status !== PaymentStatus.SUCCESS && (
+                                <button
+                                    onClick={() => handleStatusUpdate(PaymentStatus.SUCCESS)}
+                                    disabled={updating}
+                                    className="text-[10px] uppercase font-bold tracking-wider bg-emerald-600 text-white px-2 py-1 rounded hover:bg-emerald-700 disabled:opacity-50 transition-colors shadow-sm"
+                                >
+                                    Force Success
+                                </button>
+                            )}
+                            {order.status !== PaymentStatus.ABORTED && (
+                                <button
+                                    onClick={() => handleStatusUpdate(PaymentStatus.ABORTED)}
+                                    disabled={updating}
+                                    className="text-[10px] uppercase font-bold tracking-wider bg-stone-800 text-white px-2 py-1 rounded hover:bg-black disabled:opacity-50 transition-colors shadow-sm"
+                                >
+                                    Force Abort
+                                </button>
+                            )}
+                        </div>
+                        {statusError && <p className="text-[10px] text-red-500 mt-1 italic">{statusError}</p>}
                     </div>
                 </div>
 

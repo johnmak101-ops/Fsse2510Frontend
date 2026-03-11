@@ -29,6 +29,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                         <Link href="/admin/coupons" className="text-white/60 hover:text-white transition-colors cursor-pointer">Coupons</Link>
                         <Link href="/admin/membership" className="text-white/60 hover:text-white transition-colors cursor-pointer">Membership</Link>
                         <Link href="/admin/orders" className="text-white/60 hover:text-white transition-colors cursor-pointer">Orders</Link>
+                        <Link href="/admin/users" className="text-white/60 hover:text-white transition-colors cursor-pointer">Users</Link>
                         <Link href="/admin/slider" className="text-white/60 hover:text-white transition-colors cursor-pointer border-t border-white/10 pt-6">Home Slider</Link>
                         <Link href="/admin/navigation" className="text-white/60 hover:text-white transition-colors cursor-pointer">Navigation</Link>
                         <Link href="/admin/banners" className="text-white/60 hover:text-white transition-colors cursor-pointer">Collection Banners</Link>
