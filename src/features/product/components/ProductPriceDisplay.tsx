@@ -23,8 +23,17 @@ interface ProductPriceDisplayProps {
 
 /** styled price and promotion block. */
 export default function ProductPriceDisplay({ product, isSyncing }: ProductPriceDisplayProps) {
-    const hasDiscount =
-        !!(product.discountAmount && product.discountAmount > 0) && !isSyncing;
+    // While syncing, show a skeleton so the stale SSR price never flashes before
+    // the real client-side price arrives.  This eliminates the "$162 → $182" flicker.
+    if (isSyncing) {
+        return (
+            <div className="flex items-center gap-4 h-7">
+                <div className="h-6 w-20 bg-stone-200 animate-pulse rounded" />
+            </div>
+        );
+    }
+
+    const hasDiscount = !!(product.discountAmount && product.discountAmount > 0);
 
     const isMemberExclusive = product.promotionBadgeTexts
         ?.some(b => b.toUpperCase().includes("EXCLUSIVE"));
@@ -67,9 +76,7 @@ export default function ProductPriceDisplay({ product, isSyncing }: ProductPrice
             )}
 
             {/* ── Promotion Badges ── */}
-            {!isSyncing &&
-                product.promotionBadgeTexts &&
-                product.promotionBadgeTexts.length > 0 ? (
+            {product.promotionBadgeTexts && product.promotionBadgeTexts.length > 0 ? (
                 product.promotionBadgeTexts.map((badge, idx) => (
                     <span
                         key={idx}
@@ -83,7 +90,6 @@ export default function ProductPriceDisplay({ product, isSyncing }: ProductPrice
                 ))
             ) : (
                 /* ── Fallback % badge ── */
-                !isSyncing &&
                 hasDiscount &&
                 product.discountPercentage != null &&
                 product.discountPercentage > 0 && (
