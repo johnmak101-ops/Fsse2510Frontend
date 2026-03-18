@@ -1,5 +1,12 @@
 # Frontend Test Cases
 
+## FSSE2510 E-Commerce Platform
+
+| Item               | Detail                  |
+|--------------------|-------------------------|
+| **Document Version** | 1.1                   |
+| **Project Name**     | FSSE2510 E-Commerce   |
+
 ## 1. Overview
 This document outlines the testing strategy and key test cases for the FSSE2510 E-Commerce platform frontend.
 

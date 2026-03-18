@@ -1,12 +1,18 @@
 # Frontend Component & UI/UX Design
 
+## FSSE2510 E-Commerce Platform
+
+| Item               | Detail                  |
+|--------------------|-------------------------|
+| **Document Version** | 1.1                   |
+| **Project Name**     | FSSE2510 E-Commerce   |
+
 ## 1. Global Layouts
 
 ### 1.1 Storefront Layout
 Applied to all customer-facing views (Home, Product List, Details).
 *   **Header/Navbar**:
     *   Logo (left).
-    *   Search Bar (center, responsive).
     *   Navigation Links (Products, Categories).
     *   User Actions: Cart Icon (with badge for quantity), User Profile Dropdown / Login Button.
 *   **Footer**: Links to About Us, Terms of Service, Contact Info, Socials.
@@ -15,7 +21,7 @@ Applied to all customer-facing views (Home, Product List, Details).
 *   Minimalist header without standard navigation to reduce distractions. Only Company Logo and "Return to Cart" link.
 
 ### 1.3 Admin Layout
-*   **Sidebar Navigation**: Fixed left sidebar with sections: Dashboard, Products, Orders, Users.
+*   **Sidebar Navigation**: Fixed left sidebar with sections: Dashboard, Products, Promotions, Orders, Users, Membership, CMS Settings.
 *   **Top Bar**: Breadcrumbs, Admin Profile, Logout.
 
 ## 2. Key Components

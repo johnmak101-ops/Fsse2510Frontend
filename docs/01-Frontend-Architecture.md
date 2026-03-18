@@ -1,5 +1,12 @@
 # Frontend Architecture Document
 
+## FSSE2510 E-Commerce Platform
+
+| Item               | Detail                  |
+|--------------------|-------------------------|
+| **Document Version** | 1.1                   |
+| **Project Name**     | FSSE2510 E-Commerce   |
+
 ## 1. Overview
 
 This document outlines the high-level architecture for the FSSE2510 E-Commerce platform frontend. The application utilizes a modern React ecosystem tailored for high performance, great developer experience, and scalability.
@@ -25,7 +32,7 @@ graph TD
 ## 2. Tech Stack
 
 ### Core Frameworks
-*   **Next.js 16 (App Router)**: Core meta-framework for routing, SSR/SSG, and SEO optimization.
+*   **Next.js 16.1.6 (App Router)**: Core meta-framework for routing, SSR/SSG, and SEO optimization.
 *   **React 19**: UI component library with leveraging Server Components (RSC) and React Compiler.
 
 ### Styling & UI

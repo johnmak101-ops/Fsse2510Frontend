@@ -1,5 +1,12 @@
 # Frontend BRD & FSD Mapping
 
+## FSSE2510 E-Commerce Platform
+
+| Item               | Detail                  |
+|--------------------|-------------------------|
+| **Document Version** | 1.1                   |
+| **Project Name**     | FSSE2510 E-Commerce   |
+
 ## 1. Overview
 This document serves as the bridge between the high-level Business Requirements (BRD), the detailed Backend Functional Specifications (FSD), and how they are materialized specifically on the Frontend.
 
@@ -35,20 +42,20 @@ This document serves as the bridge between the high-level Business Requirements 
     *   Use Zustand merely to control the `isCartDrawerOpen` boolean.
     *   Implement Optimistic Updates for quantity changes.
 
-### 3.3 Transaction & Payment Module
+### 3.4 Transaction & Payment Module
 *   **Backend Integration**: `POST /transaction/prepare` -> receive `client_secret`.
 *   **Frontend Implementation**: 
     *   Use `@stripe/react-stripe-js` to wrap the Checkout form in an `<Elements>` provider.
     *   Ensure PCI compliance by letting Stripe Elements handle raw card inputs entirely within IFrames.
 
-### 3.4 Authentication & Membership Module
+### 3.5 Authentication & Membership Module
 *   **Backend Security**: Validates Firebase JWT.
 *   **Frontend Implementation**:
     *   Firebase Web SDK (`firebase/auth`).
     *   Listen to `onAuthStateChanged()`.
     *   Attach the JWT as an `Authorization: Bearer <token>` header globally using an interceptor inside the `ky` HTTP client setup.
 
-### 3.5 Discount & Promotion Module
+### 3.6 Discount & Promotion Module
 *   **Feature**: Coupons & Tier Discounts.
 *   **Frontend Implementation**:
     *   Provide a "Promo Code" input in the Cart Drawer.

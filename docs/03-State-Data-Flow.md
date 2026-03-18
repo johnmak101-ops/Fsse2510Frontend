@@ -1,5 +1,12 @@
 # State & Data Flow Documentation
 
+## FSSE2510 E-Commerce Platform
+
+| Item               | Detail                  |
+|--------------------|-------------------------|
+| **Document Version** | 1.1                   |
+| **Project Name**     | FSSE2510 E-Commerce   |
+
 ## 1. Overview
 The frontend strictly separates UI state, Server state, and URL state to maintain clean architecture and high performance.
 

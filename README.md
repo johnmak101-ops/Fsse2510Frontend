@@ -1,13 +1,13 @@
 # FSSE2510 Project E-Commerce Frontend 🎨
 
-![Next.js](https://img.shields.io/badge/Next.js-15-black)
+![Next.js](https://img.shields.io/badge/Next.js-16.1.6-black)
 ![React](https://img.shields.io/badge/React-19-blue)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-06B6D4)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
 ![Zustand](https://img.shields.io/badge/Zustand-State-yellow)
 
 ## 📖 Introduction
-This repository contains the frontend implementation for the FSSE2510 E-Commerce course project. Built with Next.js 15 (App Router) and React Server Components, it aims to explore modern web development practices including Server-Side Rendering (SSR) and building interactive Single-Page Applications (SPA) for the Admin panel.
+This repository contains the frontend implementation for the FSSE2510 E-Commerce course project. Built with Next.js 16.1.6 (App Router) and React Server Components, it aims to explore modern web development practices including Server-Side Rendering (SSR) and building interactive Single-Page Applications (SPA) for the Admin panel.
 
 **🚀 Live Demo:** [https://johnmak.store](https://johnmak.store)
 
@@ -40,7 +40,7 @@ The frontend architecture and implementation details are fully documented in the
 ## 🛠️ Tech Stack & Architecture
 
 ### Core Frameworks
-*   **Framework**: Next.js 15 (App Router)
+*   **Framework**: Next.js 16.1.6 (App Router)
 *   **Library**: React 19
 *   **Language**: TypeScript
 

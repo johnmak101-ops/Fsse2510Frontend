@@ -1,5 +1,12 @@
 # Frontend Definition of Done (DoD)
 
+## FSSE2510 E-Commerce Platform
+
+| Item               | Detail                  |
+|--------------------|-------------------------|
+| **Document Version** | 1.1                   |
+| **Project Name**     | FSSE2510 E-Commerce   |
+
 ## 1. Overview
 The Definition of Done outlines the specific criteria that every frontend User Story or feature must meet before it can be considered "Complete" and ready for production deployment.
 
