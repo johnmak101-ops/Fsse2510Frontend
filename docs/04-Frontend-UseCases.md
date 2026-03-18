@@ -1,5 +1,12 @@
 # Frontend Use Cases
 
+## FSSE2510 E-Commerce Platform
+
+| Item               | Detail                  |
+|--------------------|-------------------------|
+| **Document Version** | 1.1                   |
+| **Project Name**     | FSSE2510 E-Commerce   |
+
 ## 1. Overview
 This document describes the primary user interactions with the frontend application, mapped to the features of the FSSE2510 E-Commerce platform. It supplements the backend Use Cases by focusing on the UI/UX flows.
 
@@ -11,7 +18,7 @@ This document describes the primary user interactions with the frontend applicat
     1.  User lands on the home page and sees the Showcase Collections.
     2.  User navigates using the dynamic CMS Navigation menu.
     3.  User clicks into a category/shop page and sees a grid of products.
-    4.  User can use the sorting dropdown or search bar to filter products (updates Nuqs URL state).
+    4.  User can use the sorting dropdown or click category/collection tags to filter products (updates Nuqs URL state - text search is disabled).
     5.  System displays filtered results dynamically.
     6.  As the user scrolls down the page, more products are automatically loaded (Infinite Scrolling) to simulate an "Endless Aisle" experience, preventing the need to click manual pagination buttons.
 
@@ -27,8 +34,8 @@ This document describes the primary user interactions with the frontend applicat
 *   **Actor**: Customer (Logged In)
 *   **Flow**:
     1.  User clicks "Add to Cart" on a product variant.
-    2.  System optimistically updates UI, opens Cart Drawer, and sends API request.
-    3.  User can change quantities or click "Remove" inside the Cart Drawer.
+    2.  System optimistically updates UI, navigates to Cart Page (`/cart`), and sends API request.
+    3.  User can change quantities or click "Remove" inside the Cart Page.
     4.  System updates subtotal in real-time.
 
 ### UC-F04: Authentication Flow
@@ -42,11 +49,11 @@ This document describes the primary user interactions with the frontend applicat
 ### UC-F05: Checkout & Payment
 *   **Actor**: Customer
 *   **Flow**:
-    1.  User clicks "Checkout" from Cart Drawer.
+    1.  User clicks "Checkout" from the Cart Page.
     2.  System navigates to `/checkout`, displaying Order Summary.
     3.  User fills in Shipping Address (validated by Zod/React Hook Form) or selects a saved address.
     4.  User can apply a Coupon Code. System recalculates total.
-    5.  User can choose to apply Membership Points for a discount.
+    5.  User can choose to apply Membership Points for a cash discount based on the current admin-configured redemption rate. The UI ensures this cannot exceed the cart subtotal.
     6.  System requests Stripe `client_secret` from backend and mounts Stripe Payment Element.
     7.  User submits payment details. On success, system redirects to `/checkout/success/{id}`.
 
@@ -120,3 +127,10 @@ This document describes the primary user interactions with the frontend applicat
 *   **Flow**:
     1.  Admin navigates to Showcase Settings.
     2.  Admin selects which Collections to highlight on the Customer Homepage to drive sales.
+
+### UC-A07: Configure Membership Tiers
+*   **Actor**: Admin
+*   **Flow**:
+    1.  Admin navigates to Membership Settings.
+    2.  Admin configures point multipliers, minimum spend thresholds, and grace periods for Bronze, Silver, Gold, and Diamond tiers.
+    3.  Admin updates global point redemption rates (e.g., 10 points = HK$1.00).
