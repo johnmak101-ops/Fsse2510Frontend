@@ -1,108 +1,96 @@
-# FSSE2510 Project Frontend - E-Commerce Web App
+# 🛍️ FSSE2510 Project Frontend - E-Commerce Web App
 
-<div align="center">
-  <img src="https://img.shields.io/badge/Next.js-16.1.6-000000.svg?style=for-the-badge&logo=nextdotjs" alt="Next.js" />
-  <img src="https://img.shields.io/badge/React-19.2.4-20232a.svg?style=for-the-badge&logo=react&logoColor=61dafb" alt="React" />
-  <img src="https://img.shields.io/badge/Tailwind_CSS-4.2.1-38B2AC.svg?style=for-the-badge&logo=tailwindcss" alt="Tailwind CSS" />
-  <img src="https://img.shields.io/badge/TypeScript-5.0-3178C6.svg?style=for-the-badge&logo=typescript" alt="TypeScript" />
-  <img src="https://img.shields.io/badge/TanStack_Query-5.0-FF4154.svg?style=for-the-badge&logo=reactquery" alt="React Query" />
-  <img src="https://img.shields.io/badge/Firebase-Auth-FFCA28.svg?style=for-the-badge&logo=firebase" alt="Firebase" />
-  <img src="https://img.shields.io/badge/Stripe-Payments-008CDD.svg?style=for-the-badge&logo=stripe" alt="Stripe" />
-  <img src="https://img.shields.io/badge/AWS_Amplify-Hosting-FF9900.svg?style=for-the-badge&logo=awsamplify" alt="AWS Amplify" />
-</div>
+> A Next.js 16 storefront application — featuring product browsing, shopping cart, Stripe checkout, Optimistic UI, membership system, and Admin Dashboard.  
+> Deployed on AWS Amplify with automated CI/CD.
 
-<br />
-
-A Next.js 16 storefront application built with React 19 and Tailwind CSS 4. It delivers a modern shopping experience with complex state management, authentication, and payment integration.
-
-🔴 **Live Demo:** [https://johnmak.store](https://johnmak.store)    
+🔴 **Live Demo:** [https://johnmak.store](https://johnmak.store)
 
 ---
 
-## Key Features
+## ✨ Features
 
-- **Engineered Shopping Flow**: Real-time cart state management with **Optimistic UI** orchestration, ensuring immediate feedback for item additions and updates.
-- **URL-Synchronized Catalog**: Advanced product filtering and sorting using `nuqs`. Synchronizes UI state (categories, price ranges, sort order) with the URL for shareable, reproducible discovery experiences.
-- **Membership Ecosystem**: Implements tiered benefits (Bronze to Diamond) with dynamic reward logic based on user interactions.
-- **Secure Integration**: End-to-end checkout powered by the **Stripe API** and identity management via **Firebase Auth**.
-- **Management Dashboard**: Protected administrative interfaces for handling product data, coupon lifecycles, and site-wide promotional rules.
-
----
-
-## Tech Stack
-
-- **Framework**: Next.js 16.1 (App Router)
-- **Library**: React 19.2
-- **Language**: TypeScript 5
-- **Styling**: Tailwind CSS 4.2, Radix UI Primitives, Lucide Icons
-- **State Management**: Zustand 5 (Client Global State), TanStack Query 5 (Server State)
-- **Forms & Validation**: React Hook Form, Zod
-- **Networking**: Ky
-- **Animation**: GSAP 3.14, Motion 12.23
-- **Services**: Firebase (Auth), Stripe (Payments)
-- **Deployment**: AWS Amplify
+| Feature | Description |
+|---------|-------------|
+| 🛒 **Engineered Shopping Flow** | Optimistic UI with instant feedback, TanStack Query server state management |
+| 🔍 **URL-Synchronized Catalog** | `nuqs`-driven filtering/sorting, shareable and reproducible URLs |
+| ⭐ **Membership Ecosystem** | Bronze → Diamond tiers with dynamic reward logic |
+| 💳 **Secure Checkout** | End-to-end Stripe API payment + Firebase Auth identity management |
+| 🎫 **Coupon System** | Apply discount codes at checkout |
+| ❤️ **Wishlist** | Save and track favorite products |
+| 🛠️ **Admin Dashboard** | Product management, coupon lifecycle, site-wide promotional rules |
 
 ---
 
-## Getting Started
+## 🛠️ Tech Stack
+
+| Layer | Technology | Version / Notes |
+|-------|-----------|-----------------|
+| **Framework** | Next.js | 16.1.6 (App Router) |
+| **Library** | React | 19.2 |
+| **Language** | TypeScript | 5 |
+| **Styling** | Tailwind CSS | 4.2 + Radix UI + Lucide Icons |
+| **State (Client)** | Zustand | 5 — Global UI state |
+| **State (Server)** | TanStack Query | 5 — Caching, background refetch, invalidation |
+| **Forms** | React Hook Form + Zod | Validation |
+| **HTTP Client** | Ky | Auto JWT injection interceptor |
+| **Animation** | GSAP 3.14 + Motion 12.23 | Micro-animations |
+| **Auth** | Firebase Auth | Google Secure Token |
+| **Payments** | Stripe | Elements + Checkout |
+| **Deployment** | AWS Amplify | SSR + CloudFront CDN |
+
+---
+
+## 🚀 Quick Start
 
 ### 1. Prerequisites
-- Node.js 20 or higher
-- npm (v10+)
-- A Firebase project for authentication
-- A Stripe account for test/production API keys
+- Node.js 20+
+- npm v10+
+- A Firebase project (Auth)
+- A Stripe account (test/production API keys)
 
-### 2. Clone the Repository
+### 2. Clone & Install
+
 ```bash
 git clone https://github.com/johnmak101-ops/Fsse2510Frontend.git
 cd Fsse2510Frontend
-```
-
-### 3. Install Dependencies
-```bash
 npm install
-# or for an exact replica of package-lock.json:
-npm ci
 ```
 
-### 4. Environment Setup
-Copy the example environment file:
+### 3. Environment Variables
+
 ```bash
 cp .env.example .env.local
 ```
 
-Configure your `.env.local` with the following variables:
-
 | Variable | Description |
-| -------- | ----------- |
-| `NEXT_PUBLIC_API_BASE_URL` | Your Spring Boot backend URL (e.g., `http://localhost:8080`) |
+|----------|-------------|
+| `NEXT_PUBLIC_API_BASE_URL` | Spring Boot backend URL (e.g., `http://localhost:8080`) |
 | `NEXT_PUBLIC_FIREBASE_API_KEY` | Firebase Auth Web API Key |
 | `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN` | Firebase Auth Domain |
 | `NEXT_PUBLIC_FIREBASE_PROJECT_ID` | Firebase Project ID |
-| `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET`| Firebase Storage Bucket |
-| `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID`| Firebase Messaging ID |
+| `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET` | Firebase Storage Bucket |
+| `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID` | Firebase Messaging ID |
 | `NEXT_PUBLIC_FIREBASE_APP_ID` | Firebase App ID |
-| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe public key for elements |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe public key (`pk_test_` or `pk_live_`) |
 
-### 5. Start Development Server
+### 4. Start Development Server
+
 ```bash
 npm run dev
 ```
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+Open [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## Architecture
+## 🏗️ Project Structure
 
-The project follows a **Feature-Sliced Design**-inspired architecture, separating concerns into routing (`app`), shared UI (`components`), business domains (`features`), and utilities (`lib`/`hooks`/`services`).
-
-### Directory Structure
-```text
+```
 src/
-├── app/             # Next.js App Router (Entry points & Layouts)
+├── app/             # Next.js App Router (Entry Points & Layouts)
 │   ├── (account)/   # Account management routes
 │   ├── (admin)/     # Protected admin dashboard routes
-│   ├── (auth)/      # Login/Register routes 
+│   ├── (auth)/      # Login/Register routes
 │   └── (shop)/      # Main storefront routes
 ├── components/      # Shared UI Components (Domain-Agnostic)
 │   ├── common/      # Global Layouts, Headers, Footers
@@ -121,46 +109,78 @@ src/
 └── types/           # Global TypeScript Definitions
 ```
 
-### Data Flow
-```text
-User Interaction → Feature Component → TanStack Query/Zustand → Ky Client Interceptor (Injects JWT) → backend API
-```
-
 ### Core Engineering Decisions
 
-1. **API Interception (`services/api-client.ts`)**: 
-   - Centralized handling of outgoing requests through `ky`.
-   - Automatically injects Firebase ID tokens into the Authorization header.
-   - Globally intercepts 401 Unauthorized responses to trigger re-authentication flows.
-2. **State Segregation**:
-   - `Zustand`: Used for synchronous UI state (e.g., UI toggles, temporary local cart state).
-   - `TanStack Query`: Automates caching, background fetching, and invalidations for all server interactions, heavily reducing boilerplate.
+- **API Interceptor** — `ky` auto-injects Firebase ID Token; 401 globally intercepted to trigger re-authentication
+- **State Segregation** — Zustand (synchronous UI state) + TanStack Query (server state caching & invalidation)
 
 ---
 
-## Available Scripts
+## 📚 Project Documentation
+
+All documentation is available in the [`docs/`](./docs) directory, viewable directly on GitHub:
+
+### 📐 Requirements & Design
+
+| Document | Description |
+|----------|-------------|
+| [📄 FUNCTIONAL_REQUIREMENTS.md](./docs/FUNCTIONAL_REQUIREMENTS.md) | Functional Requirements — User Stories + Gherkin acceptance criteria |
+| [📄 NON_FUNCTIONAL_REQUIREMENTS.md](./docs/NON_FUNCTIONAL_REQUIREMENTS.md) | Non-Functional Requirements — Performance, accessibility, SEO, UX standards |
+| [📄 USE_CASES.md](./docs/USE_CASES.md) | Use Cases — Actor-based UML use case diagrams |
+| [📄 DEFINITION_OF_DONE.md](./docs/DEFINITION_OF_DONE.md) | Definition of Done — Quality gates and acceptance checklists |
+
+### 🏗️ Architecture & Flows
+
+| Document | Description |
+|----------|-------------|
+| [📄 ARCHITECTURE.md](./docs/ARCHITECTURE.md) | System Architecture — Feature-Sliced Design, rendering strategies |
+| [📄 SEQUENCE_DIAGRAMS.md](./docs/SEQUENCE_DIAGRAMS.md) | Sequence Diagrams — Auth, cart, and checkout flow Mermaid diagrams |
+| [📄 CHECKOUT_FLOW.md](./docs/CHECKOUT_FLOW.md) | Checkout Flow — End-to-end Stripe checkout sequence diagrams |
+
+### 🔌 API
+
+| Document | Description |
+|----------|-------------|
+| [📄 API_INTEGRATION.md](./docs/API_INTEGRATION.md) | API Integration — Ky client setup, JWT interceptors, TanStack Query hooks |
+
+### ⚙️ Deployment & Decisions
+
+| Document | Description |
+|----------|-------------|
+| [📄 DEPLOYMENT.md](./docs/DEPLOYMENT.md) | Deployment Guide — AWS Amplify CI/CD pipeline |
+| [📄 BUSINESS_DECISIONS.md](./docs/BUSINESS_DECISIONS.md) | Business Decisions — ADRs documenting frontend technology and design choices |
+
+### 📊 Flowcharts & Diagrams
+
+| Diagram | Description |
+|---------|-------------|
+| [🖼️ Cart Update Flow](./docs/diagrams/CartUpdate.svg) | Optimistic UI cart update sequence |
+| [🖼️ TanStack Query Flow](./docs/diagrams/Tanstack_Query.svg) | Server state management data flow |
+| [🖼️ Zustand + TanStack Query](./docs/diagrams/Zustand_Tanstack_Query.svg) | Client/server state segregation pattern |
+
+---
+
+## 📜 Available Scripts
 
 | Command | Description |
-| --- | --- |
-| `npm run dev` | Starts the Next.js development server with hot-reloading. |
-| `npm run build` | Builds the application for production. |
-| `npm run start` | Starts a Node.js server using the production build. |
-| `npm run lint` | Runs ESLint to strictly analyze the code for errors. |
+|---------|-------------|
+| `npm run dev` | Start Next.js dev server with hot reload |
+| `npm run build` | Build for production |
+| `npm run start` | Start production server |
+| `npm run lint` | Run ESLint strict analysis |
 
 ---
 
-## Deployment (AWS Amplify)
+## 🌐 Deploy to AWS Amplify
 
-The application is fully configured for continuous deployment via **AWS Amplify**.
+1. Connect your GitHub repository to AWS Amplify
+2. Amplify auto-detects Next.js 16 SSR framework
+3. Build settings are predefined in `amplify.yml`
+4. Add environment variables in the Amplify Console
+5. Amplify handles Edge Servers, CloudFront CDN, and SSL
 
-1. Connect your GitHub repository to AWS Amplify.
-2. AWS Amplify automatically detects the Next.js 16 SSR framework.
-3. The build settings are predefined in `amplify.yml`.
-4. Add your Environment variables inside the AWS Amplify Console.
-5. AWS Amplify handles the provisioning of edge servers, CloudFront caching, and custom domain SSL (AWS ACM).
-
-`amplify.yml` snippet:
 ```yaml
+# amplify.yml
 version: 1
 frontend:
   phases:
@@ -183,14 +203,14 @@ frontend:
 
 ---
 
-## Troubleshooting
+## ❓ Troubleshooting
 
-- **API Requests Failing (CORS or 401)**: Ensure your `NEXT_PUBLIC_API_BASE_URL` correctly points to the running backend without a trailing slash. Confirm your Firebase Project matches the backend's allowed issuer.
-- **Stripe Elements Not Rendering**: Verify your `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` is loaded correctly. It must start with `pk_test_` or `pk_live_`.
-- **Hydration Errors**: Next.js 15+ is strict about hydration. Ensure you aren't rendering browser-specific APIs (like `window` or `localStorage`) during the SSR phase without standard checking protocols (`useEffect`).
+- **API Requests Failing (CORS / 401)** — Ensure `NEXT_PUBLIC_API_BASE_URL` points to the running backend without a trailing slash
+- **Stripe Elements Not Rendering** — Verify `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` starts with `pk_test_` or `pk_live_`
+- **Hydration Errors** — Next.js 15+ strict hydration; avoid `window`/`localStorage` during SSR (use `useEffect`)
 
 ---
 
-<div align="center">
-  <b>Developed by John Mak</b><br>
+Created by **John Mak** 🚀
 
+*Last updated: 2026-03-18*
