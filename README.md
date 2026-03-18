@@ -154,9 +154,8 @@ All documentation is available in the [`docs/`](./docs) directory, viewable dire
 
 | Diagram | Description |
 |---------|-------------|
-| [🖼️ Cart Update Flow](./docs/diagrams/CartUpdate.svg) | Optimistic UI cart update sequence |
-| [🖼️ TanStack Query Flow](./docs/diagrams/Tanstack_Query.svg) | Server state management data flow |
-| [🖼️ Zustand + TanStack Query](./docs/diagrams/Zustand_Tanstack_Query.svg) | Client/server state segregation pattern |
+| [📊 Cart Store Architecture](./docs/diagrams/CART_STORE.md) | Zustand state management, optimistic updates, server sync, guest cart merge |
+| [📊 Checkout Flow](./docs/diagrams/CHECKOUT_FLOW.md) | End-to-end checkout journey, auth state machine, TanStack Query caching |
 
 ---
 
