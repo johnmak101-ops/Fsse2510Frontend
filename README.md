@@ -7,7 +7,7 @@
 ![Zustand](https://img.shields.io/badge/Zustand-State-yellow)
 
 ## 📖 Introduction
-This repository contains the frontend implementation for the FSSE2510 E-Commerce course project. Built with Next.js 16.1.6 (App Router) and React Server Components, it aims to explore modern web development practices including Server-Side Rendering (SSR) and building interactive Single-Page Applications (SPA) for the Admin panel.
+This repository contains the frontend implementation for the FSSE2510 E-Commerce course project. Built with Next.js 16.1.6 (App Router) and React Server Components, it aims to explore modern web development practices including Server-Side Rendering (SSR) and robust state synchronization.
 
 **🚀 Live Demo:** [https://johnmak.store](https://johnmak.store)
 
@@ -16,8 +16,8 @@ This repository contains the frontend implementation for the FSSE2510 E-Commerce
 
 ### 🌟 Project Features
 *   **Product Browsing**: Infinite scrolling implementation using URL query parameters.
-*   **State Management**: Exploring optimistic UI updates using React Query for shopping cart and wishlist actions.
-*   **Storefront & Admin Integration**: Building both a customer-facing shop and a basic Admin Dashboard to manage data.
+*   **State Management**: Synchronizing server state with React Query and managing client global UI state with Zustand.
+*   **Storefront Features**: Includes functional customer-facing shop flows like Cart synchronization, Wishlist, and Stripe checkout preparation.
 *   **UI Implementation**: Utilizing Tailwind CSS v4 and shadcn/ui to focus on functional design and consistent styling.
 
 ## 📚 Official Documentation
@@ -34,8 +34,7 @@ The frontend architecture and implementation details are fully documented in the
 5. [Frontend BRD & FSD Mapping](./docs/06-Frontend-BRD-FSD.md)
 
 ### Quality Assurance (QA)
-6. [Frontend Test Cases](./docs/05-Frontend-TestCases.md)
-7. [Frontend Definition of Done (DoD)](./docs/07-Frontend-DoD.md)
+6. [Frontend Definition of Done (DoD)](./docs/07-Frontend-DoD.md)
 
 ## 🛠️ Tech Stack & Architecture
 
@@ -58,9 +57,8 @@ The frontend architecture and implementation details are fully documented in the
 *   **Form Handling**: React Hook Form
 *   **Schema Validation**: Zod
 
-### Deployment & Testing
-*   **Hosting**: Vercel
-*   **Testing**: Jest (Unit), Playwright (E2E)
+### Deployment
+*   **Hosting**: AWS Amplify
 
 ---
 *Created for FSSE2510 E-Commerce Project Setup Phase.*

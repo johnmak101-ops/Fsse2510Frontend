@@ -13,7 +13,7 @@ The Definition of Done outlines the specific criteria that every frontend User S
 ## 2. Code Quality & Standards
 - [ ] **Type Safety**: No `any` types used in new code. All API payloads and component props must be strongly typed using TypeScript interfaces/types or Zod schemas.
 - [ ] **Linting & Formatting**: Code passes `eslint` without any warnings or errors. Prettier formatting is applied.
-- [ ] **Component Structure**: Components are broken down logically. Reusable UI elements are placed in `components/ui/` and feature-specific ones in `components/domain/`.
+- [ ] **Component Structure**: Components are broken down logically. Reusable UI elements are placed in `components/ui/` and feature-specific ones in `features/[feature]/`.
 - [ ] **No Console Logs**: All debugging `console.log()` statements are removed from production code.
 
 ## 3. UI/UX & Responsive Design
@@ -30,12 +30,11 @@ The Definition of Done outlines the specific criteria that every frontend User S
 - [ ] **Color Contrast**: Text and background colors meet minimum WCAG AA contrast ratios naturally through the Design System.
 
 ## 5. Performance & Data Flow
-- [ ] **Optimistic Updates**: Immediate UI feedback is provided for relevant mutative actions (like adjusting cart quantities).
+- [ ] **Mutation Feedback**: Immediate UI loading feedback is provided for relevant mutative actions (like adjusting cart quantities).
 - [ ] **Effective Caching**: React Query query keys are properly structured to ensure accurate cache invalidation without over-fetching.
 - [ ] **Image Optimization**: `<Image>` component from Next.js is used for all external or large assets.
 
 ## 6. Testing
-- [ ] **End-to-End**: Critical flows (Authentication, Add to Cart, Checkout) are covered by Playwright E2E tests and pass successfully. (Phase dependent)
 - [ ] **Manual QA**: Developer has manually walked through the "Happy Path" and at least two common "Edge Cases" in a local environment hooked up to the local backend.
 
 ## 7. Documentation

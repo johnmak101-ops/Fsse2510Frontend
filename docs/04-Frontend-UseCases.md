@@ -34,7 +34,7 @@ This document describes the primary user interactions with the frontend applicat
 *   **Actor**: Customer (Logged In)
 *   **Flow**:
     1.  User clicks "Add to Cart" on a product variant.
-    2.  System optimistically updates UI, navigates to Cart Page (`/cart`), and sends API request.
+    2.  System shows a loading state, navigates to Cart Page (`/cart`), and sends API request.
     3.  User can change quantities or click "Remove" inside the Cart Page.
     4.  System updates subtotal in real-time.
 
@@ -85,10 +85,10 @@ This document describes the primary user interactions with the frontend applicat
 *   **Actor**: Customer
 *   **Flow**:
     1.  User clicks the heart icon on a product card or details page.
-    2.  System uses optimistic UI to toggle the heart color immediately.
+    2.  System uses React Query mutation to toggle the heart color.
     3.  User navigates to "My Wishlist" to see all saved items.
 
-## 3. Admin Use Cases
+## 3. Admin Use Cases [PLANNED - NOT IMPLEMENTED]
 
 ### UC-A01: Admin Dashboard Navigation
 *   **Actor**: Admin

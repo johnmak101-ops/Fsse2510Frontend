@@ -58,28 +58,30 @@ graph TD
 *   **Motion (Framer Motion)**: Declarative animations for React components.
 *   **GSAP**: Professional-grade animation library for complex, timeline-based sequences.
 
-## 3. Directory Structure (Proposed)
+## 3. Directory Structure
 
 ```text
 src/
 ├── app/                  # Next.js App Router (Pages, Layouts, API routes)
-│   ├── (auth)/           # Route group for Login/Register (no standard layout)
+│   ├── (account)/        # Route group for User profile & order history
+│   ├── (admin)/          # Route group for Admin dashboard
+│   ├── (auth)/           # Route group for Login/Register
 │   ├── (shop)/           # Route group with Main Navbar/Footer
 │   │   ├── product/[id]/ # Dynamic product details page
 │   │   ├── cart/         # Shopping cart page
-│   │   ├── checkout/     # Checkout flow
-│   │   └── profile/      # User profile & order history
-│   └── admin/            # Admin dashboard layout
-├── components/           # Reusable React components
-│   ├── ui/               # Generic UI components (Buttons, Inputs, Dialogs - Radix/Tailwind based)
-│   ├── layout/           # Navbar, Footer, Sidebar
-│   └── domain/           # Feature-specific components (ProductCard, CartItem)
-├── lib/                  # Utility functions
-│   ├── api/              # Ky instances and API endpoints setup
-│   ├── queries/          # React Query hook definitions
-│   └── utils.ts          # Helper functions (clsx, tailwind-merge)
-├── store/                # Zustand stores
+│   │   └── checkout/     # Checkout flow
+│   └── actions/          # Server actions
+├── components/           # Reusable generic React components
+│   ├── ui/               # Generic UI components (shadcn/ui/Radix base)
+│   ├── common/           # Common layouts (Navbar, Footer, etc.)
+│   └── auth/             # Auth-related UI wrappers
+├── features/             # Feature-sliced domain modules (Product, Cart, Wishlist, etc.)
+│   └── [feature]/        # Contains feature-specific components, hooks, stores
+├── hooks/                # Global custom React hooks (including some React Query hooks)
+├── lib/                  # Utility functions (utils.ts, parsers, formatting)
+├── services/             # Ky instances and API endpoint fetchers
 ├── types/                # Global TypeScript definitions
+├── data/                 # Static data or mock representations
 └── config/               # Application configurations (Constants, Env validation)
 ```
 

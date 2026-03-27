@@ -15,7 +15,7 @@ The frontend strictly separates UI state, Server state, and URL state to maintai
 ### 2.1 Server State (TanStack React Query)
 Handles fetching, caching, synchronizing, and updating server data.
 *   **Usage**: Product lists, user profile, cart data from DB, order history.
-*   **Benefits**: Automatic retries, background refetching, caching deduplication, optimistic updates for mutations (e.g., adding to cart).
+*   **Benefits**: Automatic retries, background refetching, caching deduplication, organized query invalidation for mutations (e.g., adding to cart).
 
 ### 2.2 Global UI State (Zustand)
 Manages lightweight, reactive application state that doesn't belong on the server and needs to be accessed across multiple components.
@@ -41,11 +41,11 @@ Manages local component state specifically for inputs.
 4.  **Backend Auth**: Send ID Token to standard API requests in the `Authorization: Bearer <token>` header.
 5.  **Session state**: The frontend listens to Firebase's `onAuthStateChanged` hook to persist the login span across reloads. 
 
-### 3.2 Add to Cart Flow (Optimistic Update)
+### 3.2 Add to Cart Flow (Synchronized Update)
 1.  **User Click**: Clicks "Add to Cart" on a product.
-2.  **Optimistic UI (React Query)**: Immediately update the cached cart query data to show the new item/quantity.
+2.  **Loading State**: UI shows a loading spinner or disables the button during the request.
 3.  **Network Request**: Send `POST /cart` to backend via `ky`.
-4.  **Success/Failure**: If success, keep the optimistic update. If network fails, roll back the React Query cache and show a Sonner toast error ("Failed to add item").
+4.  **Success/Failure**: If success, React Query invalidates the cart query to refetch fresh data. If network fails, show a Sonner toast error ("Failed to add item").
 
 ### 3.3 Checkout & Payment Flow
 1.  **Initiation**: User clicks Checkout. Frontend pulls Cart Server State.
